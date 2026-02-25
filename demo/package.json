@@ -1,5 +1,5 @@
 {
-	"name": "goey-toast-demo",
+	"name": "vue-goey-toast-demo",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
@@ -9,7 +9,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"goey-toast": "file:..",
+		"vue-goey-toast": "file:..",
 		"vue": "^3.5.22"
 	},
 	"devDependencies": {

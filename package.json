@@ -1,16 +1,16 @@
 {
-	"name": "goey-toast",
+	"name": "vue-goey-toast",
 	"version": "1.0.0",
 	"description": "A gooey-inspired toast notification library for Vue 3",
 	"type": "module",
-	"main": "./dist/goey-toast.cjs",
-	"module": "./dist/goey-toast.js",
+	"main": "./dist/vue-goey-toast.cjs",
+	"module": "./dist/vue-goey-toast.js",
 	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
-			"import": "./dist/goey-toast.js",
-			"require": "./dist/goey-toast.cjs"
+			"import": "./dist/vue-goey-toast.js",
+			"require": "./dist/vue-goey-toast.cjs"
 		},
 		"./styles.css": "./dist/styles.css"
 	},

@@ -1,11 +1,24 @@
-# goey-toast (Vue 3)
+# vue-goey-toast
 
-`goey-toast` is now fully rebuilt for **Vue 3** using the **Composition API** with `<script setup lang="ts">`.
+`vue-goey-toast` is now fully rebuilt for **Vue 3** using the **Composition API** with `<script setup lang="ts">`.
 
 ## Install
 
 ```bash
-npm install goey-toast vue
+npm install vue-goey-toast vue
+```
+
+## Install from GitHub branch
+
+```bash
+npm install github:anl331/goey-toast#work
+```
+
+Then import it as:
+
+```ts
+import { GoeyToaster, goeyToast } from 'vue-goey-toast'
+import 'vue-goey-toast/styles.css'
 ```
 
 ## Usage
@@ -14,7 +27,7 @@ npm install goey-toast vue
 // main.ts
 import { createApp } from 'vue'
 import App from './App.vue'
-import 'goey-toast/styles.css'
+import 'vue-goey-toast/styles.css'
 
 createApp(App).mount('#app')
 ```
@@ -26,7 +39,7 @@ createApp(App).mount('#app')
 </template>
 
 <script setup lang="ts">
-import { GoeyToaster, goeyToast } from 'goey-toast'
+import { GoeyToaster, goeyToast } from 'vue-goey-toast'
 
 const notify = (): void => {
 	goeyToast.success('Saved!', {

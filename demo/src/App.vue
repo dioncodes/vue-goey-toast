@@ -1,7 +1,7 @@
 <template>
 	<main class="app">
 		<GoeyToaster position="bottom-right" />
-		<h1>goey-toast for Vue 3</h1>
+		<h1>vue-goey-toast for Vue 3</h1>
 		<p>Simple, typed, and reusable toast notifications.</p>
 		<div class="actions">
 			<button @click="goeyToast('Neutral notification')">Default</button>
@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { GoeyToaster, goeyToast } from 'goey-toast'
+import { GoeyToaster, goeyToast } from 'vue-goey-toast'
 
 const runPromise = async (): Promise<void> => {
 	await goeyToast.promise(

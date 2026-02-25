@@ -8,7 +8,7 @@ export default defineConfig({
 		lib: {
 			entry: resolve(__dirname, 'src/index.ts'),
 			name: 'GoeyToast',
-			fileName: 'goey-toast'
+			fileName: 'vue-goey-toast'
 		},
 		rollupOptions: {
 			external: ['vue'],
