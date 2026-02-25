@@ -1,8 +1,20 @@
-:root {
-	--goey-toast-offset: 24px;
-	--goey-toast-gap: 12px;
+/* Spinner animation */
+.goey-spinnerSpin {
+	animation: goey-spin 1s linear infinite;
 }
 
+@keyframes goey-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* ============================================
+   Vue toaster placement
+   ============================================ */
 .goey-toaster {
 	position: fixed;
 	z-index: 9999;
@@ -12,18 +24,18 @@
 .goey-toaster__stack {
 	display: flex;
 	flex-direction: column;
-	gap: var(--goey-toast-gap);
+	gap: var(--goey-toast-gap, 12px);
 }
 
 .goey-toaster--bottom-right,
 .goey-toaster--top-right {
-	right: var(--goey-toast-offset);
+	right: var(--goey-toast-offset, 24px);
 	align-items: flex-end;
 }
 
 .goey-toaster--bottom-left,
 .goey-toaster--top-left {
-	left: var(--goey-toast-offset);
+	left: var(--goey-toast-offset, 24px);
 	align-items: flex-start;
 }
 
@@ -37,229 +49,351 @@
 .goey-toaster--bottom-left,
 .goey-toaster--bottom-center,
 .goey-toaster--bottom-right {
-	bottom: var(--goey-toast-offset);
+	bottom: var(--goey-toast-offset, 24px);
 }
 
 .goey-toaster--top-left,
 .goey-toaster--top-center,
 .goey-toaster--top-right {
-	top: var(--goey-toast-offset);
+	top: var(--goey-toast-offset, 24px);
 }
 
-.goey-toast {
-	--goey-accent: #64748b;
-	--goey-accent-soft: rgba(100, 116, 139, 0.28);
-	--goey-bg: rgba(255, 255, 255, 0.95);
-	position: relative;
-	overflow: hidden;
-	isolation: isolate;
+/* Style detection marker — used by GoeyToaster to verify CSS is loaded */
+[data-goey-toast-css] {
+	--goey-toast: 1;
+}
+
+/* ============================================
+   Wrapper — copied from original styling system
+   ============================================ */
+.goey-wrapper {
 	pointer-events: auto;
-	display: flex;
-	align-items: flex-start;
-	gap: 12px;
-	width: min(420px, calc(100vw - 32px));
-	padding: 14px 14px 14px 12px;
-	border-radius: 20px;
-	backdrop-filter: blur(10px);
-	background:
-		linear-gradient(140deg, rgba(255, 255, 255, 0.85) 0%, rgba(249, 250, 251, 0.95) 40%, rgba(255, 255, 255, 0.88) 100%),
-		var(--goey-bg);
-	border: 1px solid color-mix(in srgb, var(--goey-accent) 22%, #ffffff);
-	box-shadow:
-		0 18px 38px rgba(2, 6, 23, 0.16),
-		inset 0 1px 0 rgba(255, 255, 255, 0.85);
-	transform-origin: center;
-	transition: transform 220ms ease, box-shadow 220ms ease;
+	cursor: default;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+	position: relative;
+	width: fit-content;
+	max-width: min(390px, calc(100vw - 32px));
 }
 
-.goey-toast:hover {
-	transform: translateY(-1px) scale(1.01);
-	box-shadow:
-		0 22px 44px rgba(2, 6, 23, 0.2),
-		inset 0 1px 0 rgba(255, 255, 255, 0.95);
-}
-
-.goey-toast__blob {
+/* SVG background */
+.goey-blobSvg {
 	position: absolute;
-	left: -36px;
-	top: -28px;
-	width: 140px;
-	height: 120px;
-	border-radius: 40% 60% 57% 43% / 45% 43% 57% 55%;
-	background:
-		radial-gradient(circle at 30% 35%, color-mix(in srgb, var(--goey-accent) 52%, white) 0%, transparent 42%),
-		radial-gradient(circle at 65% 62%, var(--goey-accent-soft) 0%, transparent 72%);
-	filter: blur(2px) saturate(110%);
-	opacity: 0.9;
-	z-index: -1;
-	animation: goey-blob-float 9s ease-in-out infinite;
+	top: 0;
+	left: 0;
+	overflow: visible;
+	pointer-events: none;
+	filter:
+		drop-shadow(0 4px 12px rgba(0, 0, 0, 0.06))
+		drop-shadow(0 1px 4px rgba(0, 0, 0, 0.04));
 }
 
-.goey-toast__icon-wrap {
-	flex-shrink: 0;
-	margin-top: 2px;
-	width: 28px;
-	height: 28px;
-	border-radius: 999px;
+/* Content on top of SVG background */
+.goey-content {
+	position: relative;
+	z-index: 1;
+	transition: padding 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.goey-contentCompact {
+	padding: 7px 10px 7px 10px;
+}
+
+.goey-contentExpanded {
+	padding: 7px 10px 16px 10px;
+	max-width: 380px;
+}
+
+/* ============================================
+   Shared
+   ============================================ */
+.goey-header {
 	display: inline-flex;
 	align-items: center;
-	justify-content: center;
-	background: color-mix(in srgb, var(--goey-accent) 14%, #ffffff);
-	border: 1px solid color-mix(in srgb, var(--goey-accent) 30%, #ffffff);
-	box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.7);
-}
-
-.goey-toast__icon,
-.goey-toast__custom-icon {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 14px;
-	font-weight: 800;
-	line-height: 1;
-	color: color-mix(in srgb, var(--goey-accent) 80%, #111827);
-}
-
-.goey-toast__content {
-	flex: 1;
-	min-width: 0;
-	display: flex;
-	flex-direction: column;
 	gap: 8px;
-}
-
-.goey-toast__title-row {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-}
-
-.goey-toast__title {
-	margin: 0;
-	font-family: "Bricolage Grotesque", Inter, system-ui, sans-serif;
-	font-size: 0.97rem;
-	font-weight: 700;
-	letter-spacing: 0.01em;
-	line-height: 1.25;
-	color: #111827;
-}
-
-.goey-toast__description {
-	margin: 0;
-	font-family: "DM Sans", Inter, system-ui, sans-serif;
-	font-size: 0.885rem;
-	line-height: 1.42;
-	color: #4b5563;
-}
-
-.goey-toast__action,
-.goey-toast__close {
-	border: 0;
-	background: transparent;
-	cursor: pointer;
-	font: inherit;
 	color: inherit;
 }
 
-.goey-toast__action {
-	align-self: flex-start;
-	padding: 7px 12px;
-	border-radius: 999px;
-	font-size: 0.78rem;
-	font-weight: 700;
-	letter-spacing: 0.01em;
-	background: color-mix(in srgb, var(--goey-accent) 13%, #ffffff);
-	color: color-mix(in srgb, var(--goey-accent) 72%, #111827);
-	transition: transform 150ms ease, background 180ms ease;
-}
-
-.goey-toast__action:hover {
-	transform: translateY(-1px);
-	background: color-mix(in srgb, var(--goey-accent) 19%, #ffffff);
-}
-
-.goey-toast__close {
+.goey-iconWrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	flex-shrink: 0;
-	width: 24px;
-	height: 24px;
-	margin-top: 1px;
-	padding: 0;
-	border-radius: 999px;
-	font-size: 1.06rem;
+	width: 18px;
+	height: 18px;
+	line-height: 0;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.goey-title {
+	font-size: 12px;
+	font-weight: 700;
 	line-height: 1;
-	opacity: 0.52;
-	transition: opacity 180ms ease, background 180ms ease;
+	white-space: nowrap;
+	color: inherit;
+	padding: 0 4px 0 2px;
+	margin: 0;
 }
 
-.goey-toast__close:hover {
-	opacity: 0.95;
-	background: rgba(15, 23, 42, 0.06);
+.goey-titleDefault {
+	color: #555;
 }
 
-.goey-toast--default {
-	--goey-accent: #64748b;
-	--goey-accent-soft: rgba(100, 116, 139, 0.36);
+.goey-titleSuccess {
+	color: #4caf50;
 }
 
-.goey-toast--success {
-	--goey-accent: #16a34a;
-	--goey-accent-soft: rgba(22, 163, 74, 0.3);
+.goey-titleError {
+	color: #e53935;
 }
 
-.goey-toast--error {
-	--goey-accent: #dc2626;
-	--goey-accent-soft: rgba(220, 38, 38, 0.3);
+.goey-titleWarning {
+	color: #c49000;
 }
 
-.goey-toast--warning {
-	--goey-accent: #d97706;
-	--goey-accent-soft: rgba(217, 119, 6, 0.32);
+.goey-titleInfo {
+	color: #1e88e5;
 }
 
-.goey-toast--info {
-	--goey-accent: #2563eb;
-	--goey-accent-soft: rgba(37, 99, 235, 0.34);
+.goey-titleLoading {
+	color: #555;
 }
 
-.goey-toast--loading {
-	--goey-accent: #4b5563;
-	--goey-accent-soft: rgba(75, 85, 99, 0.3);
+.goey-description {
+	font-size: 13px;
+	font-weight: 400;
+	color: #444;
+	line-height: 1.55;
+	margin-top: 12px;
+	overflow: hidden;
+	margin-bottom: 0;
 }
 
-.goey-toast--loading .goey-toast__icon {
-	animation: goey-pulse 1000ms ease-in-out infinite;
+.goey-actionWrapper {
+	margin-top: 12px;
+	overflow: hidden;
+}
+
+.goey-actionButton {
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	border: none;
+	border-radius: 999px;
+	padding: 10px 20px;
+	font-size: 13px;
+	font-weight: 700;
+	cursor: pointer;
+	font-family: inherit;
+	text-align: center;
+	outline: none;
+	-webkit-tap-highlight-color: transparent;
+	transition: background 0.15s ease;
+}
+
+.goey-actionButton:focus:not(:focus-visible) {
+	outline: none;
+}
+
+.goey-actionButton:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
+
+.goey-actionDefault {
+	background: #e8e8e8;
+	color: #555;
+}
+
+.goey-actionDefault:hover {
+	background: #dcdcdc;
+}
+
+.goey-actionDefault:active {
+	background: #d0d0d0;
+}
+
+.goey-actionSuccess {
+	background: #c8e6c9;
+	color: #4caf50;
+}
+
+.goey-actionSuccess:hover {
+	background: #a5d6a7;
+}
+
+.goey-actionSuccess:active {
+	background: #81c784;
+}
+
+.goey-actionError {
+	background: #ffcdd2;
+	color: #e53935;
+}
+
+.goey-actionError:hover {
+	background: #ef9a9a;
+}
+
+.goey-actionError:active {
+	background: #e57373;
+}
+
+.goey-actionWarning {
+	background: #ffecb3;
+	color: #c49000;
+}
+
+.goey-actionWarning:hover {
+	background: #ffe082;
+}
+
+.goey-actionWarning:active {
+	background: #ffd54f;
+}
+
+.goey-actionInfo {
+	background: #bbdefb;
+	color: #1e88e5;
+}
+
+.goey-actionInfo:hover {
+	background: #90caf9;
+}
+
+.goey-actionInfo:active {
+	background: #64b5f6;
+}
+
+.goey-close {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	border: none;
+	background: transparent;
+	font-size: 14px;
+	line-height: 1;
+	cursor: pointer;
+	color: #7a7a7a;
+}
+
+.goey-close:hover {
+	background: rgba(0, 0, 0, 0.06);
+}
+
+/* ============================================
+   Dark mode (kept from original selectors)
+   ============================================ */
+[data-sonner-toaster][data-theme='dark'] .goey-blobSvg {
+	filter:
+		drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3))
+		drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-titleDefault {
+	color: #ccc;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-titleSuccess {
+	color: #66bb6a;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-titleError {
+	color: #ef5350;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-titleWarning {
+	color: #ffb300;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-titleInfo {
+	color: #42a5f5;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-titleLoading {
+	color: #ccc;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-description {
+	color: #aaa;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-actionDefault {
+	background: #3a3a3a;
+	color: #ccc;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-actionDefault:hover {
+	background: #444;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-actionDefault:active {
+	background: #4e4e4e;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-actionSuccess {
+	background: #1b5e20;
+	color: #66bb6a;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-actionSuccess:hover {
+	background: #2e7d32;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-actionSuccess:active {
+	background: #388e3c;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-actionError {
+	background: #b71c1c;
+	color: #ef5350;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-actionError:hover {
+	background: #c62828;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-actionError:active {
+	background: #d32f2f;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-actionWarning {
+	background: #4a3800;
+	color: #ffb300;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-actionWarning:hover {
+	background: #5c4600;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-actionWarning:active {
+	background: #6e5400;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-actionInfo {
+	background: #0d47a1;
+	color: #42a5f5;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-actionInfo:hover {
+	background: #1565c0;
+}
+
+[data-sonner-toaster][data-theme='dark'] .goey-actionInfo:active {
+	background: #1976d2;
 }
 
 .goey-toast-list-enter-active,
 .goey-toast-list-leave-active,
 .goey-toast-list-move {
-	transition: all 240ms cubic-bezier(0.2, 0.9, 0.2, 1);
+	transition: all 0.24s cubic-bezier(0.2, 0.9, 0.2, 1);
 }
 
 .goey-toast-list-enter-from,
 .goey-toast-list-leave-to {
 	opacity: 0;
-	transform: translateY(10px) scale(0.96);
-}
-
-@keyframes goey-blob-float {
-	0% {
-		transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
-	}
-	50% {
-		transform: translate3d(8px, 4px, 0) scale(1.05) rotate(6deg);
-	}
-	100% {
-		transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
-	}
-}
-
-@keyframes goey-pulse {
-	0%,
-	100% {
-		opacity: 0.45;
-	}
-	50% {
-		opacity: 1;
-	}
+	transform: translateY(8px) scale(0.98);
 }
