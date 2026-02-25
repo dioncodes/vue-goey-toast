@@ -1,95 +1,46 @@
-import type { ReactNode } from 'react'
-import type { ExternalToast, ToasterProps } from 'sonner'
+import type { Component } from 'vue'
 
-export type GoeyToastType = 'default' | 'success' | 'error' | 'warning' | 'info'
-
-export interface GoeyToastTimings {
-  displayDuration?: number
-}
-
-export interface GoeyToastClassNames {
-  wrapper?: string
-  content?: string
-  header?: string
-  title?: string
-  icon?: string
-  description?: string
-  actionWrapper?: string
-  actionButton?: string
-}
+export type GoeyToastType = 'default' | 'success' | 'error' | 'warning' | 'info' | 'loading'
 
 export interface GoeyToastAction {
-  label: string
-  onClick: () => void
-  successLabel?: string
-}
-
-export interface GoeyToastData {
-  title: string
-  description?: ReactNode
-  type: GoeyToastType
-  action?: GoeyToastAction
-  icon?: ReactNode
-  duration?: number
-  classNames?: GoeyToastClassNames
-  fillColor?: string
-  borderColor?: string
-  borderWidth?: number
-  spring?: boolean
-  bounce?: number
+	label: string
+	onClick: () => void
 }
 
 export interface GoeyToastOptions {
-  description?: ReactNode
-  action?: GoeyToastAction
-  icon?: ReactNode
-  duration?: number
-  id?: string | number
-  classNames?: GoeyToastClassNames
-  fillColor?: string
-  borderColor?: string
-  borderWidth?: number
-  timing?: GoeyToastTimings
-  spring?: boolean
-  bounce?: number
+	id?: string | number
+	type?: GoeyToastType
+	title?: string
+	description?: string
+	duration?: number
+	action?: GoeyToastAction
+	closable?: boolean
+	icon?: Component
+}
+
+export interface GoeyToastItem extends Required<Omit<GoeyToastOptions, 'id' | 'icon' | 'action'>> {
+	id: string | number
+	action?: GoeyToastAction
+	icon?: Component
+	createdAt: number
+	visible: boolean
 }
 
 export interface GoeyPromiseData<T> {
-  loading: string
-  success: string | ((data: T) => string)
-  error: string | ((error: unknown) => string)
-  description?: {
-    loading?: ReactNode
-    success?: ReactNode | ((data: T) => ReactNode)
-    error?: ReactNode | ((error: unknown) => ReactNode)
-  }
-  action?: {
-    success?: GoeyToastAction
-    error?: GoeyToastAction
-  }
-  classNames?: GoeyToastClassNames
-  fillColor?: string
-  borderColor?: string
-  borderWidth?: number
-  timing?: GoeyToastTimings
-  spring?: boolean
-  bounce?: number
+	loading: string
+	success: string | ((value: T) => string)
+	error: string | ((reason: unknown) => string)
+	description?: {
+		loading?: string
+		success?: string | ((value: T) => string)
+		error?: string | ((reason: unknown) => string)
+	}
 }
 
-export type GoeyToastPhase = 'loading' | 'default' | 'success' | 'error' | 'warning' | 'info'
-
 export interface GoeyToasterProps {
-  position?: ToasterProps['position']
-  duration?: number
-  gap?: number
-  offset?: number | string
-  theme?: 'light' | 'dark'
-  toastOptions?: Partial<ExternalToast>
-  expand?: boolean
-  closeButton?: boolean
-  richColors?: boolean
-  visibleToasts?: number
-  dir?: 'ltr' | 'rtl'
-  spring?: boolean
-  bounce?: number
+	position?: 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right'
+	offset?: string
+	gap?: string
+	duration?: number
+	maxToasts?: number
 }

@@ -1,0 +1,140 @@
+:root {
+	--goey-bg: #ffffff;
+	--goey-text: #111827;
+	--goey-muted: #4b5563;
+	--goey-border: rgba(17, 24, 39, 0.08);
+	--goey-shadow: 0 14px 40px rgba(17, 24, 39, 0.2);
+	--goey-radius: 18px;
+}
+
+.goey-toaster {
+	position: fixed;
+	z-index: 9999;
+	pointer-events: none;
+}
+
+.goey-toaster__stack {
+	display: flex;
+	flex-direction: column;
+	gap: var(--goey-toast-gap, 12px);
+}
+
+.goey-toaster--bottom-right,
+.goey-toaster--top-right {
+	right: var(--goey-toast-offset, 24px);
+	align-items: flex-end;
+}
+
+.goey-toaster--bottom-left,
+.goey-toaster--top-left {
+	left: var(--goey-toast-offset, 24px);
+	align-items: flex-start;
+}
+
+.goey-toaster--bottom-center,
+.goey-toaster--top-center {
+	left: 50%;
+	transform: translateX(-50%);
+	align-items: center;
+}
+
+.goey-toaster--bottom-left,
+.goey-toaster--bottom-center,
+.goey-toaster--bottom-right {
+	bottom: var(--goey-toast-offset, 24px);
+}
+
+.goey-toaster--top-left,
+.goey-toaster--top-center,
+.goey-toaster--top-right {
+	top: var(--goey-toast-offset, 24px);
+}
+
+.goey-toast {
+	pointer-events: auto;
+	display: flex;
+	gap: 12px;
+	width: min(360px, calc(100vw - 32px));
+	padding: 14px;
+	border-radius: var(--goey-radius);
+	background: var(--goey-bg);
+	border: 1px solid var(--goey-border);
+	box-shadow: var(--goey-shadow);
+	color: var(--goey-text);
+}
+
+.goey-toast__content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.goey-toast__title-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.goey-toast__dot {
+	width: 10px;
+	height: 10px;
+	border-radius: 999px;
+	background: currentColor;
+	opacity: 0.75;
+}
+
+.goey-toast__title {
+	margin: 0;
+	font-size: 0.95rem;
+	font-weight: 700;
+	line-height: 1.3;
+}
+
+.goey-toast__description {
+	margin: 0;
+	font-size: 0.875rem;
+	color: var(--goey-muted);
+}
+
+.goey-toast__action,
+.goey-toast__close {
+	border: 0;
+	background: transparent;
+	cursor: pointer;
+	padding: 0;
+	font: inherit;
+	color: inherit;
+}
+
+.goey-toast__action {
+	align-self: flex-start;
+	padding: 6px 10px;
+	border-radius: 999px;
+	background: rgba(17, 24, 39, 0.08);
+	font-size: 0.8rem;
+	font-weight: 600;
+}
+
+.goey-toast__close {
+	font-size: 1.15rem;
+	line-height: 1;
+	opacity: 0.55;
+}
+
+.goey-toast--success { color: #0f766e; }
+.goey-toast--error { color: #b42318; }
+.goey-toast--warning { color: #b45309; }
+.goey-toast--info { color: #1d4ed8; }
+.goey-toast--loading { color: #374151; }
+
+.goey-toast-list-enter-active,
+.goey-toast-list-leave-active {
+	transition: all 180ms ease;
+}
+
+.goey-toast-list-enter-from,
+.goey-toast-list-leave-to {
+	opacity: 0;
+	transform: translateY(8px) scale(0.96);
+}
