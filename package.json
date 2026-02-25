@@ -52,9 +52,13 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/anl331/goey-toast"
+		"url": "https://github.com/dioncodes/vue-goey-toast"
 	},
 	"engines": {
 		"node": ">=18.0.0"
+	},
+	"homepage": "https://github.com/dioncodes/vue-goey-toast",
+	"bugs": {
+		"url": "https://github.com/dioncodes/vue-goey-toast/issues"
 	}
 }

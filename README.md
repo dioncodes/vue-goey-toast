@@ -8,10 +8,10 @@
 npm install vue-goey-toast vue
 ```
 
-## Install from GitHub branch
+## Install from the forked GitHub branch
 
 ```bash
-npm install github:anl331/goey-toast#work
+npm install github:dioncodes/vue-goey-toast#codex/migrate-library-to-vue-3-with-ts-support
 ```
 
 Then import it as:
@@ -79,3 +79,11 @@ Types are bundled and exported for:
 - `GoeyToastItem`
 - `GoeyPromiseData<T>`
 - `GoeyToasterProps`
+
+## License & origin
+
+This project is MIT licensed.
+
+This Vue package is based on the original work from the upstream project/fork origin:
+- Original upstream: `anl331/goey-toast`
+- Forked Vue package repo: `dioncodes/vue-goey-toast`
