@@ -1,8 +1,6 @@
-import '@testing-library/jest-dom/vitest'
+import { afterEach } from 'vitest'
+import { goeyToast } from '../composables/toastStore'
 
-// Mock ResizeObserver for jsdom
-global.ResizeObserver = class ResizeObserver {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
-}
+afterEach(() => {
+	goeyToast.dismiss()
+})

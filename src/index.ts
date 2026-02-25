@@ -1,11 +1,6 @@
-import './components/GoeyToast.css'
-export { GoeyToaster } from './components/GoeyToaster'
-export { goeyToast } from './goey-toast'
-export type {
-  GoeyToastOptions,
-  GoeyPromiseData,
-  GoeyToasterProps,
-  GoeyToastAction,
-  GoeyToastClassNames,
-  GoeyToastTimings,
-} from './types'
+import GoeyToaster from './components/GoeyToaster.vue'
+import GoeyToast from './components/GoeyToast.vue'
+import { goeyToast } from './composables/toastStore'
+
+export { GoeyToaster, GoeyToast, goeyToast }
+export type { GoeyToastAction, GoeyToastItem, GoeyToastOptions, GoeyToastType, GoeyToasterProps, GoeyPromiseData } from './types'
