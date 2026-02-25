@@ -1,5 +1,10 @@
 <template>
-	<section :class="['goey-toaster', `goey-toaster--${props.position}`]" :style="toasterStyle">
+	<section
+		:class="['goey-toaster', `goey-toaster--${props.position}`]"
+		:data-theme="props.theme"
+		data-goey-toast-css
+		:style="toasterStyle"
+	>
 		<TransitionGroup name="goey-toast-list" tag="div" class="goey-toaster__stack">
 			<GoeyToast
 				v-for="toast in toasts"
@@ -22,7 +27,8 @@ const props = withDefaults(defineProps<GoeyToasterProps>(), {
 	offset: '24px',
 	gap: '12px',
 	duration: 4000,
-	maxToasts: 5
+	maxToasts: 5,
+	theme: 'light'
 })
 
 const { toasts, dismiss } = useToastStore()

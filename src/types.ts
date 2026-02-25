@@ -43,4 +43,5 @@ export interface GoeyToasterProps {
 	gap?: string
 	duration?: number
 	maxToasts?: number
+	theme?: 'light' | 'dark'
 }
